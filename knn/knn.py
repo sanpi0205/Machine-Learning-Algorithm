@@ -46,3 +46,31 @@ def classify0(inX, dataSet, labels, k):
     
     # 返回排序后第一个类别
     return sortedClassCount[0][0]
+    
+def knn2(inX, dataSet, labels, k):
+    """利用遍历样本方法计算knn"""
+    dataSize, dim = dataSet.shape
+    
+    # 距离向量
+    distances = []
+    
+    for i in xrange(dataSize):
+        # 计算欧氏距离
+        distance = np.linalg.norm(inX - dataSet[i])
+        distances.append(distance)
+    
+    distances = np.array(distances)
+    sortedDistances = distances.argsort()
+    classCount = {}
+    for i in xrange(k):
+        label  = labels[sortedDistances[i]]
+        classCount[label] = classCount.get(label, 0) + 1
+    
+    # 对类标签排序,并按照降序排列
+    sortedClassCount = sorted(classCount.iteritems(), key=operator.itemgetter(1), reverse = True)
+    
+    # 返回排序后第一个类别
+    return sortedClassCount[0][0]
+    
+        
+        
