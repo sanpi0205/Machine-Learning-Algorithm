@@ -48,3 +48,10 @@ knn的变型方式主要有，对距离计算方法的变化、以及对样本�
 2. 加权变化
 
     在分类时，可以对样本点进行加权，比如用距离的倒数加权，上文模型中每个样本点权重相同均为$1/k$
+
+
+## 参考文献
+
+[1] [Machine Learning in Action]()
+
+[2] [The Elements of Statistics Learning]()
