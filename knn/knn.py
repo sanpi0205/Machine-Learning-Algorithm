@@ -109,13 +109,14 @@ def autoNorm(dataSet):
     minValues = dataSet.min(0)
     maxValues = dataSet.max(0)
     dataRange = maxValues - minValues
+    
     # 利用矩阵计算，用空间换时间
     dataSize,dim = dataSet.shape
     normData = np.zeros((dataSize, dim))
     normData = dataSet - np.tile(minValues, (dataSize, 1))
     normData = normData / np.tile(dataRange, (dataSize, 1))
     
-    return 
+    return normData
     
     
 
