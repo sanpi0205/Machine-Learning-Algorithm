@@ -16,3 +16,9 @@ ax = fig.add_subplot(111)
 ax.scatter(dataSet[:,0], dataSet[:,1], s=15.0*labels, c=15.0*labels)
 plt.show()
 
+
+# 测试误判率
+reload(knn)
+# testRatio为测试集比例，k为邻居个数
+knn.knnTest('data/datingTestSet2.txt',testRatio=0.2, k=3)
+

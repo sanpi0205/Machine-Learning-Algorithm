@@ -2,6 +2,7 @@
 
 import numpy as np
 import operator
+import random
 
 def createDataSet():
     """创建模拟数据"""
@@ -119,5 +120,33 @@ def autoNorm(dataSet):
     return normData
     
     
-
+def knnTest(filename, testRatio = 0.1, k = 3):
+    """测试分类效果"""
+    
+    # 读取数据并归一化
+    dataSet, labels = file2matrix(filename)
+    dataSet = autoNorm(dataSet)
+    dataSize, dim = dataSet.shape
+    
+    # 随机化原始数据
+    indices = range(0,dataSize)
+    random.shuffle(indices)
+    dataSet = dataSet[indices]
+    labels = labels[indices]
+    
+    # 测试数量
+    numTest = int(dataSize * testRatio)
+    
+    numError = 0.0
+    for i in xrange(numTest):
+        predictLabel = classify0(dataSet[i,:], dataSet[numTest:, :], labels[numTest:], k)
+        print "第%d个样本， 预测类别: %d, 实际类别: %d"  % (indices[i], predictLabel, labels[i])
+        if predictLabel != labels[i]:
+            numError += 1
+    
+    testError = numError / float(numTest)
+    print "测试数据误判率为：%f" %testError
+    return testError
+    
+    
         
