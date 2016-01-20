@@ -108,7 +108,7 @@ def createTree(dataSet, labels):
     if len(dataSet[0]) == 1:
         return majorityCount(classList)
     bestFeature = chooseBestFeature(dataSet)
-    bestLabels = labels[bestFeature]
-    
+    bestLabel = labels[bestFeature]
+    # 删除labels中的bestLabel，因为在下次划分数据后，数据中间
     
     
