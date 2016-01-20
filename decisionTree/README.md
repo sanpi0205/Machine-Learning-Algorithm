@@ -27,3 +27,7 @@ $$
 ## 算法
 
 决策树的算法有很多种，如ID3、CART、C4.5等等
+
+参考文献：
+[1] (wikipedia)[https://en.wikipedia.org/wiki/Decision_tree_learning]
+[2] (sfd)
