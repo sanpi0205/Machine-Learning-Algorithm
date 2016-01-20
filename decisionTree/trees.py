@@ -24,4 +24,19 @@ def createData():
 def calculateEntropy(dataSet):
 
     num = len(dataSet)
+    labelCounts = {}
     
+    for row in dataSet:
+        label = row[-1]
+        #print label
+        if label not in labelCounts.keys():
+            labelCounts[label] = 1
+        else:
+            labelCounts[label] += 1
+        
+    entropy = 0.0
+    for key in labelCounts:
+        probability = float(labelCounts[key]) / num
+        entropy -= probability * math.log(probability, 2)
+        
+    return entropy
