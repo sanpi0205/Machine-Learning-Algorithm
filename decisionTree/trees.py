@@ -40,3 +40,20 @@ def calculateEntropy(dataSet):
         entropy -= probability * math.log(probability, 2)
         
     return entropy
+    
+def spliteDataSet(dataSet, axis, value):
+    """在特定变量和特定点上划分数据，
+    划分后的数据将比原来数据集少一个维度，即减少了划分变量，
+    也就是说在二分类树的情况下，每次划分都有且只有一个变量将数据集划分两个部分
+    """
+    
+    splitedData = []
+    for row in dataSet:
+        if row[axis] == value:
+            leftDataSet = row[:axis]
+            rightDataSet = row[axis+1:]
+            # 拼接数据
+            leftDataSet.extend(rightDataSet)
+            splitedData.append(leftDataSet)
+    return splitedData
+
