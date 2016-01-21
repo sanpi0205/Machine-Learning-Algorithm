@@ -95,6 +95,8 @@ def majorityCount(classList):
     sortedClassCount = sorted(classCount.iteritems, key=operator.itemgetter(1), reverse=True)
     return sortedClassCount[0][0]
     
+
+
 def createTree(dataSet, labels):
     """创建决策树"""
     
@@ -109,6 +111,26 @@ def createTree(dataSet, labels):
         return majorityCount(classList)
     bestFeature = chooseBestFeature(dataSet)
     bestLabel = labels[bestFeature]
-    # 删除labels中的bestLabel，因为在下次划分数据后，数据中间
+    # 删除labels中的bestLabel，因为在下次划分数据后，数据会减少一个变量
+    del(labels[bestFeature])
+    
+    tree = {bestLabel:{}}
+    featureValues = [row[bestFeature] for row in dataSet]
+    uniqueValues = set(featureValues)
+    for value in uniqueValues:
+        subLabels = labels[:]
+        # 递归函数
+        # 疑问：变量有可能重复出现时的处理方式？
+        tree[bestLabel][value] = createTree(spliteDataSet(dataSet, bestFeature, value), subLabels)
+    return tree
+
+
+def classify(tree, labels, newData):
+    """根据构建的决策树模型预测新数据newData
+    
+    """
+    
+    
+    
     
     
