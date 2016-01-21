@@ -127,8 +127,27 @@ def createTree(dataSet, labels):
 
 def classify(tree, labels, newData):
     """根据构建的决策树模型预测新数据newData
-    
+    需要遍历决策树，找到与当前输入数据相匹配的叶节点，并返回叶节点值
     """
+    
+    #获取父节点lable
+    parentNode = tree.keys()[0]
+    #子节点
+    childNode = tree[parentNode]
+    #parentNode在labels中位置
+    featureLabelIndex = labels.index(parentNode)
+    for key in childNode.keys():
+        #如果newData
+        if newData[featureLabelIndex] == key:
+            if isinstance(childNode[key], dict):
+                #递归函数
+                classLabel = classify(childNode[key], labels, newData)
+            else:
+                classLabel = childNode[key]
+    
+    return classLabel
+
+
     
     
     
