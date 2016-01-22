@@ -27,11 +27,11 @@ def vocabularyList(dataSet):
     """将文本中所有词语汇聚成一个无重复词的List，
     返回值必须是list, 后续要调用list.index
     """
-    vacabularySet = set([])
+    vocabularySet = set([])
     
     for document in dataSet:
-        vacabularySet = vacabularySet | set(document)
-    return list(vacabularySet)
+        vocabularySet = vocabularySet | set(document)
+    return list(vocabularySet)
 
 def words2vector(vacabularyList, newWords):
     """将新词list，转化为与vacabulary相同长度的0-1数组
@@ -50,4 +50,13 @@ def words2vector(vacabularyList, newWords):
         print "共有 %d 个单词不再词来表中，占比: %f" %(wordsNotIncluded, rateNotIncluded)
     
     return vector
+
+def trainModel(dataSet, classes):
+    """通过训练数据计算每个词的概率
+    并假定这些词是独立的，如果词相互关联怎么处理？
+    """
+    
+    
+
+
 
