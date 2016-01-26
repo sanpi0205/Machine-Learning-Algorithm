@@ -55,8 +55,34 @@ def trainModel(dataSet, classes):
     """通过训练数据计算每个词的概率
     并假定这些词是独立的，如果词相互关联怎么处理？
     """
+    n = len(dataSet) #数据长度
+    numWords = len(dataSet[0]) #列长度，即词列表的长度
+    
+    #c=1的概率
+    p_c1 = np.sum(classes) / float(n)
+    # 这样会使输出的概率之和不等于1，但是分类中只涉及两个
+    # 样本的比较，因而不会影响最终分类。
+    
+    # 初始化为1，在比较大小是为单调函数，为使得取对数时不产生错误
+    p_w_c0 = np.ones(numWords)
+    p_w_c1 = np.ones(numWords)
+    
+    # 初始化为2，分母不为零，即使所有概率均为零
+    p_c0_total = 2.0
+    p_c1_total = 2.0
+    
+    for i in range(n):
+        if classes[i] == 1:
+            p_w_c1 += dataSet[i]
+            p_c1_total += np.sum(dataSet[i])
+        else:
+            p_w_c0 += dataSet[i]
+            p_c0_total += np.sum(dataSet[i])
+    
+    p1 = np.log( p_w_c1 / p_c1_total)
+    p0 = np.log( p_w_c0 / p_c0_total )
+    return p0, p1, p_c1
+
     
     
-
-
-
+            
