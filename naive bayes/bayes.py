@@ -57,6 +57,7 @@ def trainModel(dataSet, classes):
     """
     n = len(dataSet) #数据长度
     numWords = len(dataSet[0]) #列长度，即词列表的长度
+    classes = np.array(classes)
     
     #c=1的概率
     p_c1 = np.sum(classes) / float(n)
@@ -95,6 +96,19 @@ def classifyNB(newData, p0Vector, p1Vector, pc1):
         return 0
 
 def testNB():
+    posts, classes = loadData()
+    wordsList = vocabularyList(posts)
+    trainingSet = []
+    for post in posts:
+        trainingSet.append(words2vector(wordsList, post))
+    p0, p1, pc1 = trainModel(trainingSet, classes)
+    i = 0
+    for post in posts:
+        tmp  = words2vector(wordsList, post)
+        result = classifyNB(tmp, p0, p1, pc1)
+        print "the true class is %s, the predict class is %s" %(classes[i], result)
+        i += 1
+    
     
     
             
