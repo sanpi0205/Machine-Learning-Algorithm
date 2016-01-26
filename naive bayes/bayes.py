@@ -83,6 +83,18 @@ def trainModel(dataSet, classes):
     p0 = np.log( p_w_c0 / p_c0_total )
     return p0, p1, p_c1
 
+
+def classifyNB(newData, p0Vector, p1Vector, pc1):
+    
+    p0 = np.sum(newData * p0Vector) + np.log(1-pc1)
+    p1 = np.sum(newData * p1Vector) + np.log(pc1)
+    
+    if p1 > p0:
+        return 1
+    else:
+        return 0
+
+def testNB():
     
     
             
