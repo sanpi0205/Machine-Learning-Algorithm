@@ -4,7 +4,13 @@ Created on Thu Jan 21 15:35:10 2016
 
 @author: zhangbo
 
-贝叶斯分类器
+贝叶斯分类器:
+
+使用说明：
+1. 构建词列表vocabularyList(dataSet)
+2. 构建词频率矩阵 wordsMatrix(vocabulary, dataSet)
+3. 计算p0, p1,pc1
+4. 预测新数据 classifyNB()
 
 """
 
@@ -33,14 +39,14 @@ def vocabularyList(dataSet):
         vocabularySet = vocabularySet | set(document)
     return list(vocabularySet)
 
-def words2vector(vacabularyList, newWords):
+def words2vector(vocabularyList, newWords):
     """将新词list，转化为与vacabulary相同长度的0-1数组
     """
-    vector = [0] * len(vacabularyList)
+    vector = [0] * len(vocabularyList)
     wordsNotIncluded = 0
     for word in newWords:
-        if word in vacabularyList:
-            vector[vacabularyList.index(word)] = 1
+        if word in vocabularyList:
+            vector[vocabularyList.index(word)] = 1
         else:
             print "the word: %s is not in this list" %word
             wordsNotIncluded += 1
@@ -50,6 +56,22 @@ def words2vector(vacabularyList, newWords):
         print "共有 %d 个单词不再词来表中，占比: %f" %(wordsNotIncluded, rateNotIncluded)
     
     return vector
+
+def words2Frequency(vocabularyList, newWords):
+    """将词向量按照其出现频率统计，而非0-1
+    """
+    vector = [0] * len(vocabularyList)
+    for word in newWords:
+        if word in vocabularyList:
+            vector[vocabularyList.index(word)] += 1
+    return vector
+
+def wordsMatrix(vocabularyList, dataSet):
+    matrix = []
+    for data in dataSet:
+        matrix.append(words2Frequency(vocabularyList, data))
+    return matrix
+
 
 def trainModel(dataSet, classes):
     """通过训练数据计算每个词的概率
@@ -95,7 +117,7 @@ def classifyNB(newData, p0Vector, p1Vector, pc1):
     else:
         return 0
 
-def testNB():
+def trainError():
     posts, classes = loadData()
     wordsList = vocabularyList(posts)
     trainingSet = []
@@ -103,12 +125,16 @@ def testNB():
         trainingSet.append(words2vector(wordsList, post))
     p0, p1, pc1 = trainModel(trainingSet, classes)
     i = 0
+    error = 0.0
     for post in posts:
         tmp  = words2vector(wordsList, post)
         result = classifyNB(tmp, p0, p1, pc1)
-        print "the true class is %s, the predict class is %s" %(classes[i], result)
+        if classes[i] != result:
+            error += 1
+            print "the true class is %s, the predict class is %s" %(classes[i], result)
+        
         i += 1
+    errorRate = error / i
+    print "训练集误判率为 %f" %errorRate
     
-    
-    
-            
+
