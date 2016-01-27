@@ -9,13 +9,14 @@ Created on Thu Jan 21 15:35:10 2016
 使用说明：
 1. 构建词列表vocabularyList(dataSet)
 2. 构建词频率矩阵 wordsMatrix(vocabulary, dataSet)
-3. 计算p0, p1,pc1
+3. 训练模型，计算p0, p1,pc1
 4. 预测新数据 classifyNB()
 
 """
 
 import numpy as np
 import operator
+import re
 
 
 def loadData():
