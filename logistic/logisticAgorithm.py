@@ -97,7 +97,10 @@ def SGD(dataSet, y):
     n, p = dataSet.shape
     alpha = 0.01
     weights = np.ones(p)
+    #for j in xrange(200):
+    #    randomIndex = np.random.choice(range(n),size=n,replace=False)
     for i in xrange(n):
+        #alpha = 4 / (1.0 + i + j) + 0.01
         h = sigmoid(np.sum(dataSet[i] * weights))
         error = h - y[i]
         weights += -alpha * dataSet[i] * error
@@ -109,6 +112,9 @@ def SGDmodify(dataSet, y, numIter = 150):
     weights = np.ones(p)
     
     for j in xrange(numIter):
+        """原书中的代码，这里做一些优化，优化思路从 1..n 中无放回抽样，即可
+        得到 1..n 的随机序列
+        
         dataIndex = range(n)
         for i in xrange(n):
             alpha = 4 / (1.0 + i + j) + 0.01
@@ -117,6 +123,14 @@ def SGDmodify(dataSet, y, numIter = 150):
             error = h - y[dataIndex[randomNum]]
             weights += -alpha * dataSet[dataIndex[randomNum]] * error
             del(dataIndex[randomNum])
+        """
+        randomIndex = np.random.choice(range(n),size=n,replace=False)
+        for i in xrange(n):
+            alpha = 4 / (1.0 + i + j) + 0.01
+            h = sigmoid(np.sum(dataSet[randomIndex[i]] * weights))
+            error = h - y[randomIndex[i]]
+            weights += -alpha * dataSet[randomIndex[i]] * error
+        
     return weights
     
     
